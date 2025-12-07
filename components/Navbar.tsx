@@ -3,14 +3,17 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, Code2, Sun, Moon } from 'lucide-react'
+import { Menu, Code2, Sun, Moon, User, LogOut, UserCircle } from 'lucide-react'
 import { useTheme } from '@/contexts/ThemeContext'
+import { useAuth } from '@/contexts/AuthContext'
 import Sidebar from './Sidebar'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [userMenuOpen, setUserMenuOpen] = useState(false)
   const { theme, toggleTheme } = useTheme()
+  const { user, logout, isLoading } = useAuth()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -117,6 +120,100 @@ export default function Navbar() {
                 </motion.div>
                 <span className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl" />
               </motion.button>
+
+              {/* Auth Buttons / User Menu */}
+              {!isLoading && (
+                <>
+                  {user ? (
+                    <div className="relative">
+                      <motion.button
+                        onClick={() => setUserMenuOpen(!userMenuOpen)}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex items-center gap-2 px-4 py-2.5 rounded-xl transition-all duration-300 text-theme-primary dark:hover:bg-white/10 hover:bg-gray-100/80 backdrop-blur-sm"
+                      >
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 flex items-center justify-center text-white font-semibold">
+                          {user.name ? user.name[0].toUpperCase() : user.email[0].toUpperCase()}
+                        </div>
+                        <span className="hidden md:block font-medium">
+                          {user.name || user.email.split('@')[0]}
+                        </span>
+                      </motion.button>
+
+                      {/* User Dropdown Menu */}
+                      <AnimatePresence>
+                        {userMenuOpen && (
+                          <>
+                            {/* Backdrop */}
+                            <div
+                              className="fixed inset-0 z-40"
+                              onClick={() => setUserMenuOpen(false)}
+                            />
+
+                            <motion.div
+                              initial={{ opacity: 0, y: -10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: -10 }}
+                              transition={{ duration: 0.2 }}
+                              className="absolute right-0 mt-2 w-56 glass-with-border rounded-xl shadow-2xl overflow-hidden z-50"
+                            >
+                              <div className="p-4 border-b border-theme">
+                                <p className="text-sm font-medium text-theme-primary">
+                                  {user.name || 'User'}
+                                </p>
+                                <p className="text-xs text-theme-tertiary truncate">
+                                  {user.email}
+                                </p>
+                              </div>
+                              <div className="p-2">
+                                <Link
+                                  href="#"
+                                  onClick={() => setUserMenuOpen(false)}
+                                  className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-theme-secondary hover:text-theme-primary dark:hover:bg-white/10 hover:bg-gray-100 transition-all"
+                                >
+                                  <UserCircle className="w-4 h-4" />
+                                  <span className="text-sm">Profile</span>
+                                </Link>
+                                <button
+                                  onClick={() => {
+                                    logout()
+                                    setUserMenuOpen(false)
+                                  }}
+                                  className="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-red-500 hover:bg-red-500/10 transition-all"
+                                >
+                                  <LogOut className="w-4 h-4" />
+                                  <span className="text-sm">Logout</span>
+                                </button>
+                              </div>
+                            </motion.div>
+                          </>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <Link href="/login">
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="px-4 py-2 rounded-lg text-theme-secondary hover:text-theme-primary dark:hover:bg-white/10 hover:bg-gray-100/80 transition-all duration-300 font-medium"
+                        >
+                          Login
+                        </motion.button>
+                      </Link>
+                      <Link href="/signup">
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 font-medium"
+                        >
+                          Sign Up
+                        </motion.button>
+                      </Link>
+                    </div>
+                  )}
+                </>
+              )}
             </div>
           </div>
         </div>
