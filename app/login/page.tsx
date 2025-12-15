@@ -35,7 +35,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 from-slate-50 via-white to-slate-50">
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 from-slate-50 via-white to-slate-50">
       <Navbar />
 
       {/* Background Elements */}
@@ -52,7 +52,7 @@ export default function LoginPage() {
       />
 
       {/* Login Form */}
-      <div className="relative z-10 flex items-center justify-center min-h-screen px-4 pt-20 pb-12">
+      <div className="relative z-10 flex items-center justify-center min-h-screen px-4 pt-32 pb-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -134,10 +134,10 @@ export default function LoginPage() {
             {/* Divider */}
             <div className="relative my-8">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-theme"></div>
+                <div className="w-full border-t border-theme opacity-30"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-4 py-2 bg-theme-secondary rounded-lg text-theme-primary">
+                <span className="px-4 py-2 rounded-lg bg-theme-primary bg-gradient-to-r from-blue-600/10 to-cyan-600/10 backdrop-blur-sm border border-blue-500/20 text-theme-primary shadow-lg">
                   New to Forge?
                 </span>
               </div>

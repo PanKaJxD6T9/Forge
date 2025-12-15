@@ -6,6 +6,8 @@ interface User {
   id: string
   email: string
   name?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 interface AuthContextType {
@@ -15,6 +17,7 @@ interface AuthContextType {
   signup: (email: string, password: string, name?: string) => Promise<{ success: boolean; error?: string }>
   logout: () => Promise<void>
   checkSession: () => Promise<void>
+  updateProfile: (name: string, email: string) => Promise<{ success: boolean; error?: string }>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -105,6 +108,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  const updateProfile = async (name: string, email: string) => {
+    try {
+      const response = await fetch('/api/auth/update-profile', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email }),
+      })
+
+      const data = await response.json()
+
+      if (response.ok && data.success) {
+        setUser(data.user)
+        return { success: true }
+      } else {
+        return { success: false, error: data.error || 'Profile update failed' }
+      }
+    } catch (error) {
+      console.error('Profile update error:', error)
+      return { success: false, error: 'An error occurred during profile update' }
+    }
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -114,6 +141,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         signup,
         logout,
         checkSession,
+        updateProfile,
       }}
     >
       {children}

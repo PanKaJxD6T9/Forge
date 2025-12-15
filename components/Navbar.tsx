@@ -135,7 +135,7 @@ export default function Navbar() {
                         <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 flex items-center justify-center text-white font-semibold">
                           {user.name ? user.name[0].toUpperCase() : user.email[0].toUpperCase()}
                         </div>
-                        <span className="hidden md:block font-medium">
+                        <span className="hidden md:block font-medium font-heading">
                           {user.name || user.email.split('@')[0]}
                         </span>
                       </motion.button>
@@ -158,16 +158,16 @@ export default function Navbar() {
                               className="absolute right-0 mt-2 w-56 glass-with-border rounded-xl shadow-2xl overflow-hidden z-50"
                             >
                               <div className="p-4 border-b border-theme">
-                                <p className="text-sm font-medium text-theme-primary">
+                                <p className="text-sm font-medium font-heading text-theme-primary">
                                   {user.name || 'User'}
                                 </p>
-                                <p className="text-xs text-theme-tertiary truncate">
+                                <p className="text-xs font-heading text-theme-tertiary truncate">
                                   {user.email}
                                 </p>
                               </div>
                               <div className="p-2">
                                 <Link
-                                  href="#"
+                                  href="/profile"
                                   onClick={() => setUserMenuOpen(false)}
                                   className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-theme-secondary hover:text-theme-primary dark:hover:bg-white/10 hover:bg-gray-100 transition-all"
                                 >

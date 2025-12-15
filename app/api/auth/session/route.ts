@@ -35,6 +35,8 @@ export async function GET(request: NextRequest) {
           id: user._id,
           email: user.email,
           name: user.name,
+          createdAt: user.createdAt,
+          updatedAt: user.updatedAt,
         },
       },
       { status: 200 }
