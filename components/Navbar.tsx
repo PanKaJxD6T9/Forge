@@ -70,8 +70,8 @@ export default function Navbar() {
               </Link>
             </div>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-2">
+            {/* Desktop Navigation - Hidden on tablet, shown on large screens */}
+            <div className="hidden lg:flex items-center gap-2">
               {navLinks.map((link, index) => (
                 <motion.div
                   key={link.href}
@@ -196,7 +196,7 @@ export default function Navbar() {
                         <motion.button
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
-                          className="px-4 py-2 rounded-lg text-theme-secondary hover:text-theme-primary dark:hover:bg-white/10 hover:bg-gray-100/80 transition-all duration-300 font-medium"
+                          className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-theme-secondary hover:text-theme-primary dark:hover:bg-white/10 hover:bg-gray-100/80 transition-all duration-300 font-medium text-sm sm:text-base"
                         >
                           Login
                         </motion.button>
@@ -205,7 +205,7 @@ export default function Navbar() {
                         <motion.button
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
-                          className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 font-medium"
+                          className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 font-medium text-sm sm:text-base"
                         >
                           Sign Up
                         </motion.button>
